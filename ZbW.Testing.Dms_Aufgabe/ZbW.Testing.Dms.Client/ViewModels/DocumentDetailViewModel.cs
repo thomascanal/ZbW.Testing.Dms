@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Windows;
 
     using Microsoft.Win32;
 
@@ -165,8 +166,33 @@
         private void OnCmdSpeichern()
         {
             // TODO: Add your Code here
+            var validationSuccessfull = ValidateDocument();
+            if (validationSuccessfull == false)
+            {
+                MessageBox.Show("Eingabewerte prüfen!", "Validierung Fehlgeschlagen");
+            }
 
+            
             _navigateBack();
+        }
+
+        private bool ValidateDocument()
+        {
+            if (_bezeichnung == null)
+            {
+                return false;
+            }
+            else if (_valutaDatum == null)
+            {
+                return false;
+            }
+            else if (_selectedTypItem == null)
+            {
+                return false;
+            }
+
+            return true;
+
         }
     }
 }
