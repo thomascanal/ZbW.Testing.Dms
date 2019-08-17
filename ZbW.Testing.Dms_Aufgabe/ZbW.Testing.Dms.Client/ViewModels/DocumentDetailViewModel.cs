@@ -169,7 +169,7 @@
             var validationSuccessfull = ValidateDocument();
             if (validationSuccessfull == false)
             {
-                MessageBox.Show("Eingabewerte prüfen!", "Validierung Fehlgeschlagen");
+                MessageBox.Show("Bezeichnung, Valuta Datum und Typ müssen ausgewählt sein", "Validierung Fehlgeschlagen");
             }
 
             
