@@ -14,13 +14,13 @@ namespace ZbW.Testing.Dms.Client.Services
 
     class DataToXml
     {
-        public void MetadatenSchreiben(MetadataItem metadataItem)
+        public void MetadatenSchreiben(MetadataItem metadataItem, Guid guid, string outputFolderPath)
         {
             //var inputFilePath = metadataItem.FilePfad;
-            var outputFilePath = @"c:\temp\GUID_Metadata.xml";
+            var filePath = Path.Combine(outputFolderPath, $"{guid}_Metadata.xml");
             var xmlserializer = new XmlSerializer(typeof(MetadataItem));
 
-            FileStream datei = File.Create(outputFilePath);
+            FileStream datei = File.Create(filePath);
 
             xmlserializer.Serialize(datei, metadataItem);
             datei.Close();

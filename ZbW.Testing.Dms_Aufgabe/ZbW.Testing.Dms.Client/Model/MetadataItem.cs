@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class MetadataItem
+    public class MetadataItem
     {
         public string FilePfad { get; set; }
 

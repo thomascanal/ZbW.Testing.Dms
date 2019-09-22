@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Dynamic;
+    using System.IO;
     using System.Windows;
 
     using Microsoft.Win32;
@@ -167,17 +169,43 @@
 
         private void OnCmdSpeichern()
         {
+            var outputFolderPath = @"c:\temp\";
+
             var validationSuccessfull = ValidateDocument();
             if (validationSuccessfull == false)
             {
                 MessageBox.Show("Bezeichnung, Valuta Datum und Typ müssen ausgewählt sein", "Validierung Fehlgeschlagen");
             }
+
+            var guid = Guid.NewGuid();
             MetadataItem Item = new MetadataItem(_filePath, _bezeichnung, _valutaDatum.Value, _selectedTypItem, _erfassungsdatum, _benutzer, _isRemoveFileEnabled);
             DataToXml dataToXml = new DataToXml();
-            dataToXml.MetadatenSchreiben(Item);
+            dataToXml.MetadatenSchreiben(Item, guid, outputFolderPath);
 
+
+            var CopyFileSucessfull = CopyFile(guid, outputFolderPath);
+            if (Item.DateiAnschliessendLöschen == true && CopyFileSucessfull == true)
+            {
+                File.Delete(_filePath);
+            }
 
             _navigateBack();
+        }
+
+
+        private bool CopyFile(Guid guid, string outputFolerPath)
+        {
+            try
+            {
+                var destinationPath = Path.Combine(outputFolerPath, $"{guid}_{Path.GetFileName(_filePath)}");
+                File.Copy(_filePath, destinationPath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
         }
 
         private bool ValidateDocument()
@@ -186,7 +214,7 @@
             {
                 return false;
             }
-            else if (_valutaDatum.HasValue)
+            else if (!_valutaDatum.HasValue)
             {
                 return false;
             }
