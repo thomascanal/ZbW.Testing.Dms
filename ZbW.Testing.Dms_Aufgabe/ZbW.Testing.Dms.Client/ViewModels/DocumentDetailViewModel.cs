@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Dynamic;
     using System.IO;
     using System.Windows;
@@ -169,7 +170,8 @@
 
         private void OnCmdSpeichern()
         {
-            var outputFolderPath = @"c:\temp\";
+            var outputFolderPath = ConfigurationManager.AppSettings["RepositoryDir"];
+            outputFolderPath = CreateValutaFolderIfNotExists(outputFolderPath);
 
             var validationSuccessfull = ValidateDocument();
             if (validationSuccessfull == false)
@@ -192,6 +194,12 @@
             _navigateBack();
         }
 
+        private string CreateValutaFolderIfNotExists(string outputFolderPath)
+        {
+            var valutaFolderPath = outputFolderPath + "/" + ValutaDatum.Value.Year;
+            Directory.CreateDirectory(valutaFolderPath);
+            return valutaFolderPath;
+        }
 
         private bool CopyFile(Guid guid, string outputFolerPath)
         {
