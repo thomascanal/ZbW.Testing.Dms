@@ -1,12 +1,18 @@
 ﻿namespace ZbW.Testing.Dms.Client.ViewModels
 {
+    using System;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     using Prism.Commands;
     using Prism.Mvvm;
 
     using ZbW.Testing.Dms.Client.Model;
     using ZbW.Testing.Dms.Client.Repositories;
+    using ZbW.Testing.Dms.Client.Services;
 
     internal class SearchViewModel : BindableBase
     {
@@ -115,12 +121,53 @@
 
         private void OnCmdSuchen()
         {
-            
+            var metadataItems = new List<MetadataItem>();
+            var metadataItemsXmlReferenz = new List<string>();
+            var inputFolderPath = ConfigurationManager.AppSettings["RepositoryDir"];
+            var allDirectories = Directory.GetDirectories(inputFolderPath);
+            foreach (var directory in allDirectories)
+            {
+                foreach (var file in Directory.EnumerateFiles(directory, "*.xml"))
+                {
+                    metadataItemsXmlReferenz.Add(file);
+                }
+            }
+
+            foreach (var xmlReferenz in metadataItemsXmlReferenz)
+            {
+                metadataItems.Add(new DataToXml().LesenMetadten(xmlReferenz));
+            }
+
+            if (SelectedTypItem == null)
+            {
+                FilteredMetadataItems = metadataItems;
+                if (Suchbegriff != null)
+                {
+                    CmdSuchbegriffSuche(Suchbegriff.ToLower());
+                }
+            }
+            else
+            {
+                FilteredMetadataItems = metadataItems.Where(m => m.Typ == SelectedTypItem).ToList();
+                if (Suchbegriff != null)
+                {
+                    CmdSuchbegriffSuche(Suchbegriff.ToLower());
+                }
+            }
+
+        }
+
+        private void CmdSuchbegriffSuche(string suchbegriff)
+        {
+            FilteredMetadataItems = FilteredMetadataItems.Where(m => m.Bezeichnung.ToLower().Contains(suchbegriff) ||
+                                                                     m.Stichwoerter != null && m.Stichwoerter.ToLower().Contains(suchbegriff)).ToList();
         }
 
         private void OnCmdReset()
         {
-            // TODO: Add your Code here
+            Suchbegriff = String.Empty;
+            SelectedTypItem = null;
+            OnCmdSuchen();
         }
     }
 }
