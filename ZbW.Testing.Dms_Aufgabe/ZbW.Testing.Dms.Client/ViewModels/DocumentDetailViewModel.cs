@@ -9,7 +9,9 @@
     using Prism.Commands;
     using Prism.Mvvm;
 
+    using ZbW.Testing.Dms.Client.Model;
     using ZbW.Testing.Dms.Client.Repositories;
+    using ZbW.Testing.Dms.Client.Services;
 
     internal class DocumentDetailViewModel : BindableBase
     {
@@ -166,13 +168,17 @@
         private void OnCmdSpeichern()
         {
             // TODO: Add your Code here
+
             var validationSuccessfull = ValidateDocument();
             if (validationSuccessfull == false)
             {
                 MessageBox.Show("Bezeichnung, Valuta Datum und Typ müssen ausgewählt sein", "Validierung Fehlgeschlagen");
             }
+            MetadataItem Item = new MetadataItem(_filePath, _bezeichnung, _valutaDatum.Value, _selectedTypItem, _erfassungsdatum, _benutzer, _isRemoveFileEnabled);
+            DataToXml dataToXml = new DataToXml();
+            dataToXml.MetadatenSchreiben(Item);
 
-            
+
             _navigateBack();
         }
 
@@ -182,7 +188,7 @@
             {
                 return false;
             }
-            else if (_valutaDatum == null)
+            else if (_valutaDatum.HasValue)
             {
                 return false;
             }

@@ -14,20 +14,16 @@ namespace ZbW.Testing.Dms.Client.Services
 
     class DataToXml
     {
-        public string MetadatenSchreiben(MetadataItem metadataItem)
+        public void MetadatenSchreiben(MetadataItem metadataItem)
         {
-            var xmlserializer = new XmlSerializer(typeof(MetadataItem)); //Objekt MetadataIteam schreiben
-            //var stringWriter = new StringWriter();
-            //var datei = XmlWriter.Create(stringWriter);
+            //var inputFilePath = metadataItem.FilePfad;
+            var outputFilePath = @"c:\temp\GUID_Metadata.xml";
+            var xmlserializer = new XmlSerializer(typeof(MetadataItem));
 
-            var filePfad = metadataItem.FilePfad;
-            FileStream datei = File.Create(filePfad);
-            //var xmlSchreiben = stringWriter.ToString();
+            FileStream datei = File.Create(outputFilePath);
 
             xmlserializer.Serialize(datei, metadataItem);
             datei.Close();
-
-            return filePfad;
         }
 
         //public Metadaten LesenMetadten(string pfad)
@@ -40,21 +36,5 @@ namespace ZbW.Testing.Dms.Client.Services
 
         //}
         //public void AlsXmlSpeichern (string seriali)
-
-
-
-        /****************Beispiel aus MSDN!*************************/
-        //public static void WriteXML()
-        //{
-        //    Book metadataItem = new Book();
-        //    metadataItem.title = "Serialization Overview";
-        //    XmlSerializer xmlserializer = new XmlSerializer(typeof(Book));
-
-        //    var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
-        //    FileStream datei = File.Create(path);
-
-        //    xmlserializer.Serialize(datei, metadataItem);
-        //    datei.Close();
-        //}
     }
 }
