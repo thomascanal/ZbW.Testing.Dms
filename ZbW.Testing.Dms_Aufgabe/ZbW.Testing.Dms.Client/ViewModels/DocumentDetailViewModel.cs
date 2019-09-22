@@ -167,8 +167,6 @@
 
         private void OnCmdSpeichern()
         {
-            // TODO: Add your Code here
-
             var validationSuccessfull = ValidateDocument();
             if (validationSuccessfull == false)
             {

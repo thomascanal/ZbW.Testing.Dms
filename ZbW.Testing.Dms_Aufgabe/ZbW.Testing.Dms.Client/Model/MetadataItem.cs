@@ -20,6 +20,10 @@
 
         public bool DateiAnschliessendLöschen { get; set; }
 
+        public MetadataItem()
+        {
+        }
+
         public MetadataItem(string filePfad, string bezeichnung, DateTime valutaDatum, string typ, 
                             DateTime erfassungsdatum, string benutzer, bool dateiAnschliessendLöschen)
         {

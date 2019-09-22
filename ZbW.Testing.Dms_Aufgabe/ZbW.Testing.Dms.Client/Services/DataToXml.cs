@@ -26,15 +26,20 @@ namespace ZbW.Testing.Dms.Client.Services
             datei.Close();
         }
 
-        //public Metadaten LesenMetadten(string pfad)
-        //{
+        public MetadataItem LesenMetadten(string path)
+        {
+            var serializer = new XmlSerializer(typeof(MetadataItem));
+            var reader = new StreamReader(path);
+            var metadataItem = (MetadataItem)serializer.Deserialize(reader);
+            reader.Close();
+            return metadataItem;
+        }
 
-        //}
-
-        //public void XmlSpeichern()
-        //{
-
-        //}
-        //public void AlsXmlSpeichern (string seriali)
+        public void XmlSpeichern(string serializeXml, string path)
+        {
+            var xdoc = new XmlDocument();
+            xdoc.LoadXml(serializeXml);
+            xdoc.Save(path);
+        }
     }
 }
