@@ -55,5 +55,10 @@
             Benutzer = benutzer;
             DateiAnschliessendLöschen = dateiAnschliessendLöschen;
         }
+        public MetadataItem(string bezeichnung,DateTime valutaDatum)
+        {
+            Bezeichnung = bezeichnung;
+            ValutaDatum = valutaDatum;
+        }
     }
 }

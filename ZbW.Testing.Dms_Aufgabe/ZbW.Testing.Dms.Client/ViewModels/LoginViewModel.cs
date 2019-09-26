@@ -1,4 +1,9 @@
-﻿namespace ZbW.Testing.Dms.Client.ViewModels
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("ZbW.Testing.Dms.UnitTests")]
+[assembly: InternalsVisibleTo("ZbW.Testing.Dms.IntegrationTests")]
+
+namespace ZbW.Testing.Dms.Client.ViewModels
 {
     using System.Windows;
 
@@ -63,5 +68,6 @@
 
             _loginView.Close();
         }
+        public bool NoUsername() => string.IsNullOrEmpty(Benutzername);
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("ZbW.Testing.Dms.UnitTests")]
+[assembly: InternalsVisibleTo("ZbW.Testing.Dms.IntegrationTests")]
 
 namespace ZbW.Testing.Dms.Client.Services
 {
+    using System;
     using System.IO;
     using System.Xml;
     using System.Xml.Serialization;
