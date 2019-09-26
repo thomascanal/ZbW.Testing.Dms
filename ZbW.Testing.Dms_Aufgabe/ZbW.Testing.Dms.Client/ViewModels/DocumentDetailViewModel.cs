@@ -180,7 +180,7 @@
             }
 
             var guid = Guid.NewGuid();
-            MetadataItem Item = new MetadataItem(_filePath, _bezeichnung, _valutaDatum.Value, _selectedTypItem, _erfassungsdatum, _benutzer, _isRemoveFileEnabled);
+            MetadataItem Item = new MetadataItem(_filePath ,_bezeichnung, _valutaDatum.Value, _selectedTypItem, _erfassungsdatum, _benutzer, _isRemoveFileEnabled);
             DataToXml dataToXml = new DataToXml();
             dataToXml.MetadatenSchreiben(Item, guid, outputFolderPath);
 

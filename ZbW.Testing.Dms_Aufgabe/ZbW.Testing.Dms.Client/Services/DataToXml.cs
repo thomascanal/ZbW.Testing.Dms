@@ -17,10 +17,12 @@ namespace ZbW.Testing.Dms.Client.Services
         public void MetadatenSchreiben(MetadataItem metadataItem, Guid guid, string outputFolderPath)
         {
             //var inputFilePath = metadataItem.FilePfad;
-            var filePath = Path.Combine(outputFolderPath, $"{guid}_Metadata.xml");
+            var filePathMethadata = Path.Combine(outputFolderPath, $"{guid}_Metadata.xml");
+            var filePathDocument = Path.Combine(outputFolderPath, $"{guid}_{Path.GetFileName(metadataItem.FilePfad)}");
             var xmlserializer = new XmlSerializer(typeof(MetadataItem));
 
-            FileStream datei = File.Create(filePath);
+            FileStream datei = File.Create(filePathMethadata);
+            metadataItem.FilePfad = filePathDocument;
 
             xmlserializer.Serialize(datei, metadataItem);
             datei.Close();
@@ -41,5 +43,11 @@ namespace ZbW.Testing.Dms.Client.Services
             xdoc.LoadXml(serializeXml);
             xdoc.Save(path);
         }
+
+        //    public string GetFileExtension(string fileName)
+        //    {
+        //        var splittedByPoint = fileName.Split('.');
+        //        return splittedByPoint[splittedByPoint.Length - 1];
+        //    }
     }
 }

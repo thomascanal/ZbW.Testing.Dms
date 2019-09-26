@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -116,7 +117,7 @@
 
         private void OnCmdOeffnen()
         {
-            // TODO: Add your Code here
+            Process.Start(SelectedMetadataItem.FilePfad);
         }
 
         private void OnCmdSuchen()
